@@ -1,6 +1,7 @@
 package com.dev.cinema.security;
 
 import com.dev.cinema.exceptions.AuthenticationException;
+import com.dev.cinema.exceptions.DataProcessingException;
 import com.dev.cinema.lib.Inject;
 import com.dev.cinema.lib.Service;
 import com.dev.cinema.model.User;
@@ -16,9 +17,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public User login(String email, String password) throws AuthenticationException {
         Optional<User> userFromDb = userService.findByEmail(email);
-        byte[] salt = userFromDb.get().getSalt();
-        String saltedPass = HashUtil.hashPassword(password, salt);
-        if (userFromDb != null && saltedPass.equals(userFromDb.get().getPassword())) {
+        if (userFromDb.isPresent() && isValid(password, userFromDb.get())) {
             return userFromDb.get();
         }
         throw new AuthenticationException("Incorrect data entered");
@@ -27,5 +26,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public User register(String email, String password) {
         return userService.add(new User(password, email));
+    }
+
+    private boolean isValid(String password, User user) {
+        return HashUtil.hashPassword(password, user.getSalt()).equals(user.getPassword());
     }
 }
