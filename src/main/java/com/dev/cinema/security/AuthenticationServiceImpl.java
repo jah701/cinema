@@ -1,7 +1,6 @@
 package com.dev.cinema.security;
 
 import com.dev.cinema.exceptions.AuthenticationException;
-import com.dev.cinema.exceptions.DataProcessingException;
 import com.dev.cinema.lib.Inject;
 import com.dev.cinema.lib.Service;
 import com.dev.cinema.model.User;
