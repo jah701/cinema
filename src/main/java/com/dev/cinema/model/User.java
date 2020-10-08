@@ -1,9 +1,6 @@
 package com.dev.cinema.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class User {
@@ -13,7 +10,31 @@ public class User {
     private String name;
     private String login;
     private String password;
-    private String salt;
+    private byte[] salt;
+    @Column(unique = true)
+    private String email;
+
+    public User(String password, String email) {
+        this.password = password;
+        this.email = email;
+    }
+
+    public User(String login, String password, String email) {
+        this.login = login;
+        this.password = password;
+        this.email = email;
+    }
+
+    public User() {
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public Long getId() {
         return id;
@@ -47,11 +68,11 @@ public class User {
         this.password = password;
     }
 
-    public String getSalt() {
+    public byte[] getSalt() {
         return salt;
     }
 
-    public void setSalt(String salt) {
+    public void setSalt(byte[] salt) {
         this.salt = salt;
     }
 
@@ -59,8 +80,6 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", salt='" + salt + '\'' +
                 '}';
