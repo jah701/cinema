@@ -26,7 +26,7 @@ public class UserDaoImpl implements UserDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't add new user", e);
+            throw new DataProcessingException("Can't add new user: " + user, e);
         } finally {
             session.close();
         }
@@ -37,7 +37,7 @@ public class UserDaoImpl implements UserDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<User> query = session.createQuery("from User u where email = :email");
             query.setParameter("email", email);
-            return Optional.of(query.getSingleResult());
+            return query.uniqueResultOptional();
         }
     }
 }
