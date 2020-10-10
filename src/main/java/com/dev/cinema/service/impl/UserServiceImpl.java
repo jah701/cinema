@@ -14,9 +14,6 @@ public class UserServiceImpl implements UserService {
     @Inject
     private UserDao userDao;
 
-    @Inject
-    private ShoppingCartService shoppingCartService;
-
     @Override
     public User add(User user) {
         byte[] userSalt = HashUtil.getSalt();
@@ -24,7 +21,6 @@ public class UserServiceImpl implements UserService {
         user.setPassword(hashedPass);
         user.setSalt(userSalt);
         userDao.add(user);
-        shoppingCartService.registerNewShoppingCart(user);
         return user;
     }
 

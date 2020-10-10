@@ -9,12 +9,14 @@ import com.dev.cinema.security.AuthenticationService;
 import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
+
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 
 public class Main {
     private static Injector injector = Injector.getInstance("com.dev.cinema");
 
-    public static void main(String[] args) throws AuthenticationException {
+    public static void main(String[] args) throws AuthenticationException, InvocationTargetException {
         MovieService movieService =
                 (MovieService) injector.getInstance(MovieService.class);
         movieService.getAll().forEach(System.out::println);
