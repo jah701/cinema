@@ -31,7 +31,6 @@ public class Injector {
         Injector injector = new Injector(mainPackageName);
         injectors.put(mainPackageName, injector);
         return injector;
-
     }
 
     public Object getInstance(Class<?> certainInterface) {

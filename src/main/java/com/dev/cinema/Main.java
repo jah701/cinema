@@ -49,5 +49,7 @@ public class Main {
                 (AuthenticationService) injector.getInstance(AuthenticationService.class);
         authenticationService.register("bob@gmail.com", "qwerty123456");
         System.out.println(authenticationService.login("bob@gmail.com", "qwerty123456"));
+
+
     }
 }
