@@ -1,9 +1,13 @@
 package com.dev.cinema.model;
 
-import org.hibernate.annotations.Fetch;
-
 import java.util.List;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "shopping_carts")
@@ -42,5 +46,11 @@ public class ShoppingCart {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "ShoppingCart{" + "id=" + id + ", tickets=" + tickets
+                + ", user=" + user + '}';
     }
 }
