@@ -19,14 +19,14 @@ public class UserDaoImpl implements UserDao {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.persist(user);
+            session.save(user);
             transaction.commit();
             return user;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't add new user: " + user, e);
+            throw new DataProcessingException("Can't add new user: " + user.toString(), e);
         } finally {
             session.close();
         }
