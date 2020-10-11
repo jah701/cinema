@@ -15,7 +15,6 @@ import java.util.Collections;
 public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Inject
     private ShoppingCartDao shoppingCartDao;
-
     @Inject
     private TicketDao ticketDao;
 
