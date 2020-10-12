@@ -17,16 +17,14 @@ import java.util.List;
 @Dao
 public class OrderDaoImpl implements OrderDao {
     @Override
-    public Order add(List<Ticket> tickets, User user) {
-        Order order = new Order();
-        order.setTickets(tickets);
-        order.setUser(user);
+    public Order add(Order order) {
         Session session = null;
         Transaction transaction = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             session.save(order);
+            session.flush();
             transaction.commit();
             return order;
         } catch (Exception e) {
@@ -43,9 +41,14 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<Order> getAllUserOrders(User user) {
-//        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-//            Query<Order> query = session.createQuery("from Order o ");
-//        }
-        return Collections.emptyList();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<Order> query =
+                    session.createQuery(
+                            "select distinct o from Order o "
+                                    + "join fetch o.tickets "
+                                    + "where o.user = :user", Order.class)
+                    .setParameter("user", user);
+            return query.getResultList();
+        }
     }
 }

@@ -8,7 +8,7 @@ import com.dev.cinema.model.User;
 import java.util.List;
 
 public interface OrderDao {
-    Order add(List<Ticket> tickets, User user);
+    Order add(Order order);
 
     List<Order> getAllUserOrders(User user);
 }

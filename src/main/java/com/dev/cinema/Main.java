@@ -8,6 +8,7 @@ import com.dev.cinema.service.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Main {
     private static Injector injector = Injector.getInstance("com.dev.cinema");
@@ -68,5 +69,7 @@ public class Main {
         OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
         orderService.completeOrder(shoppingCartService.getByUser(bob).getTickets(), bob);
 
+        List<Order> orderList = orderService.getOrderHistory(bob);
+        orderList.forEach(System.out::println );
     }
 }
