@@ -2,10 +2,17 @@ package com.dev.cinema;
 
 import com.dev.cinema.exceptions.AuthenticationException;
 import com.dev.cinema.lib.Injector;
-import com.dev.cinema.model.*;
+import com.dev.cinema.model.CinemaHall;
+import com.dev.cinema.model.Movie;
+import com.dev.cinema.model.MovieSession;
+import com.dev.cinema.model.Order;
+import com.dev.cinema.model.User;
 import com.dev.cinema.security.AuthenticationService;
-import com.dev.cinema.service.*;
-
+import com.dev.cinema.service.CinemaHallService;
+import com.dev.cinema.service.MovieService;
+import com.dev.cinema.service.MovieSessionService;
+import com.dev.cinema.service.OrderService;
+import com.dev.cinema.service.ShoppingCartService;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.util.List;
@@ -70,6 +77,6 @@ public class Main {
         orderService.completeOrder(shoppingCartService.getByUser(bob).getTickets(), bob);
 
         List<Order> orderList = orderService.getOrderHistory(bob);
-        orderList.forEach(System.out::println );
+        orderList.forEach(System.out::println);
     }
 }
