@@ -20,6 +20,9 @@ public class User {
     @Column(unique = true)
     private String email;
 
+    public User() {
+    }
+
     public User(String password, String email) {
         this.password = password;
         this.email = email;
@@ -29,9 +32,6 @@ public class User {
         this.login = login;
         this.password = password;
         this.email = email;
-    }
-
-    public User() {
     }
 
     public String getEmail() {
