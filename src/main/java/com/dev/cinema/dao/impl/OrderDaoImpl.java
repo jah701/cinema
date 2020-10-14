@@ -21,7 +21,6 @@ public class OrderDaoImpl implements OrderDao {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             session.save(order);
-            session.flush();
             transaction.commit();
             return order;
         } catch (Exception e) {
