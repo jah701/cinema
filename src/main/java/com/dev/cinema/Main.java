@@ -14,9 +14,11 @@ import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
 import com.dev.cinema.service.OrderService;
 import com.dev.cinema.service.ShoppingCartService;
+
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.util.List;
+
 import org.apache.log4j.Logger;
 
 public class Main {
@@ -75,21 +77,13 @@ public class Main {
         ShoppingCartService shoppingCartService =
                 (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
         shoppingCartService.addSession(movieSession, bob);
-        try {
-            logger.info(shoppingCartService.getByUser(bob));
-        } catch (DataProcessingException e) {
-            logger.warn("Something went wrong while accessing user: " + bob);
-        }
+        logger.info(shoppingCartService.getByUser(bob));
 
         logger.info("Starting 'Order Service' test . . .");
         OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
         orderService.completeOrder(shoppingCartService.getByUser(bob).getTickets(), bob);
 
         List<Order> orderList = orderService.getOrderHistory(bob);
-        try {
-            orderList.forEach(logger::info);
-        } catch (DataProcessingException e) {
-            logger.warn("Something went wrong while accessing an order list");
-        }
+        orderList.forEach(logger::info);
     }
 }
