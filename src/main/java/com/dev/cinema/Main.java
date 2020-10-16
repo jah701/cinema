@@ -1,6 +1,7 @@
 package com.dev.cinema;
 
 import com.dev.cinema.exceptions.AuthenticationException;
+import com.dev.cinema.exceptions.DataProcessingException;
 import com.dev.cinema.lib.Injector;
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.model.Movie;
@@ -13,19 +14,16 @@ import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
 import com.dev.cinema.service.OrderService;
 import com.dev.cinema.service.ShoppingCartService;
-
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.util.List;
-
 import org.apache.log4j.Logger;
 
 public class Main {
     private static Injector injector = Injector.getInstance("com.dev.cinema");
     private static final Logger logger = Logger.getLogger(Main.class);
 
-    public static void main(String[] args) throws AuthenticationException,
-            InvocationTargetException {
+    public static void main(String[] args) throws InvocationTargetException {
         logger.info("Starting 'Movie' test . . .");
         MovieService movieService =
                 (MovieService) injector.getInstance(MovieService.class);
@@ -69,7 +67,7 @@ public class Main {
         String email = null;
         try {
             logger.info(authenticationService.login(email = "bob@gmail.com", "qwerty123456"));
-        } catch (Exception e) {
+        } catch (AuthenticationException e) {
             logger.warn("Something went wrong while logging the user with E-Mail: " + email, e);
         }
 
@@ -79,10 +77,9 @@ public class Main {
         shoppingCartService.addSession(movieSession, bob);
         try {
             logger.info(shoppingCartService.getByUser(bob));
-        } catch (Exception e) {
+        } catch (DataProcessingException e) {
             logger.warn("Something went wrong while accessing user: " + bob);
         }
-
 
         logger.info("Starting 'Order Service' test . . .");
         OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
@@ -91,7 +88,7 @@ public class Main {
         List<Order> orderList = orderService.getOrderHistory(bob);
         try {
             orderList.forEach(logger::info);
-        } catch (Exception e) {
+        } catch (DataProcessingException e) {
             logger.warn("Something went wrong while accessing an order list");
         }
     }
