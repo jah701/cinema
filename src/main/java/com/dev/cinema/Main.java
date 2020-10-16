@@ -5,14 +5,17 @@ import com.dev.cinema.lib.Injector;
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.model.Movie;
 import com.dev.cinema.model.MovieSession;
+import com.dev.cinema.model.Order;
 import com.dev.cinema.model.User;
 import com.dev.cinema.security.AuthenticationService;
 import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
+import com.dev.cinema.service.OrderService;
 import com.dev.cinema.service.ShoppingCartService;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Main {
     private static Injector injector = Injector.getInstance("com.dev.cinema");
@@ -37,6 +40,7 @@ public class Main {
         cinemaHall.setDescription("Best hall ever");
         cinemaHallService.add(cinemaHall);
         cinemaHallService.getAll().forEach(System.out::println);
+        System.out.println("MOVIE SESSION");
 
         MovieSession movieSession = new MovieSession();
         MovieSession movieSession2 = new MovieSession();
@@ -52,15 +56,26 @@ public class Main {
 
         movieSessionService.findAvailableSessions(1L, LocalDate.now()).forEach(System.out::println);
 
+        System.out.println("AUTH:");
+
         AuthenticationService authenticationService =
                 (AuthenticationService) injector.getInstance(AuthenticationService.class);
         User bob = authenticationService.register("bob@gmail.com", "qwerty123456");
         System.out.println(authenticationService.login("bob@gmail.com", "qwerty123456"));
+
+        System.out.println("CART");
 
         ShoppingCartService shoppingCartService =
                 (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
         shoppingCartService.addSession(movieSession, bob);
         System.out.println(shoppingCartService.getByUser(bob));
 
+        System.out.println("ORDER");
+
+        OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
+        orderService.completeOrder(shoppingCartService.getByUser(bob).getTickets(), bob);
+
+        List<Order> orderList = orderService.getOrderHistory(bob);
+        orderList.forEach(System.out::println);
     }
 }
