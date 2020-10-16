@@ -40,7 +40,6 @@ public class Main {
         cinemaHall.setDescription("Best hall ever");
         cinemaHallService.add(cinemaHall);
         cinemaHallService.getAll().forEach(System.out::println);
-
         System.out.println("MOVIE SESSION");
 
         MovieSession movieSession = new MovieSession();
