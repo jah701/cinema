@@ -13,9 +13,11 @@ import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
 import com.dev.cinema.service.OrderService;
 import com.dev.cinema.service.ShoppingCartService;
+
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.util.List;
+
 import org.apache.log4j.Logger;
 
 public class Main {
@@ -64,19 +66,33 @@ public class Main {
         AuthenticationService authenticationService =
                 (AuthenticationService) injector.getInstance(AuthenticationService.class);
         User bob = authenticationService.register("bob@gmail.com", "qwerty123456");
-        logger.info(authenticationService.login("bob@gmail.com", "qwerty123456"));
+        String email = null;
+        try {
+            logger.info(authenticationService.login(email = "bob@gmail.com", "qwerty123456"));
+        } catch (Exception e) {
+            logger.warn("Something went wrong while logging the user with E-Mail: " + email, e);
+        }
 
         logger.info("Starting 'Shopping Cart Service' test . . .");
         ShoppingCartService shoppingCartService =
                 (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
         shoppingCartService.addSession(movieSession, bob);
-        logger.info(shoppingCartService.getByUser(bob));
+        try {
+            logger.info(shoppingCartService.getByUser(bob));
+        } catch (Exception e) {
+            logger.warn("Something went wrong while accessing user: " + bob);
+        }
+
 
         logger.info("Starting 'Order Service' test . . .");
         OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
         orderService.completeOrder(shoppingCartService.getByUser(bob).getTickets(), bob);
 
         List<Order> orderList = orderService.getOrderHistory(bob);
-        orderList.forEach(logger::info);
+        try {
+            orderList.forEach(logger::info);
+        } catch (Exception e) {
+            logger.warn("Something went wrong while accessing an order list");
+        }
     }
 }

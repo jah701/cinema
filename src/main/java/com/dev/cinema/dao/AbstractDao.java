@@ -17,6 +17,7 @@ public class AbstractDao<T> {
             transaction = session.beginTransaction();
             session.save(entity);
             transaction.commit();
+            logger.info("Entity was added successfully: " + entity);
             return entity;
         } catch (Exception e) {
             if (transaction != null) {
@@ -28,7 +29,6 @@ public class AbstractDao<T> {
             if (session != null) {
                 session.close();
             }
-            logger.info("Entity was added successfully: " + entity);
         }
     }
 }
