@@ -82,7 +82,6 @@ public class Main {
         logger.info("Starting 'Order Service' test . . .");
         OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
         orderService.completeOrder(shoppingCartService.getByUser(bob).getTickets(), bob);
-
         List<Order> orderList = orderService.getOrderHistory(bob);
         orderList.forEach(logger::info);
     }
