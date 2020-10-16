@@ -1,7 +1,6 @@
 package com.dev.cinema;
 
 import com.dev.cinema.exceptions.AuthenticationException;
-import com.dev.cinema.exceptions.DataProcessingException;
 import com.dev.cinema.lib.Injector;
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.model.Movie;
@@ -14,11 +13,9 @@ import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
 import com.dev.cinema.service.OrderService;
 import com.dev.cinema.service.ShoppingCartService;
-
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.util.List;
-
 import org.apache.log4j.Logger;
 
 public class Main {
