@@ -16,32 +16,35 @@ import com.dev.cinema.service.ShoppingCartService;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 public class Main {
     private static Injector injector = Injector.getInstance("com.dev.cinema");
+    private static final Logger logger = Logger.getLogger(Main.class);
 
-    public static void main(String[] args) throws AuthenticationException,
-            InvocationTargetException {
+    public static void main(String[] args) throws InvocationTargetException {
+        logger.info("Starting 'Movie' test . . .");
         MovieService movieService =
                 (MovieService) injector.getInstance(MovieService.class);
-        movieService.getAll().forEach(System.out::println);
+        movieService.getAll().forEach(logger::info);
 
         Movie movie = new Movie();
         movie.setTitle("Movie name");
         movie.setDescription("Movie desc");
         movie = movieService.add(movie);
 
-        movieService.getAll().forEach(System.out::println);
+        movieService.getAll().forEach(logger::info);
 
+        logger.info("Starting 'Cinema Hall' test . . .");
         CinemaHallService cinemaHallService =
                 (CinemaHallService) injector.getInstance(CinemaHallService.class);
         CinemaHall cinemaHall = new CinemaHall();
         cinemaHall.setCapacity(100);
         cinemaHall.setDescription("Best hall ever");
         cinemaHallService.add(cinemaHall);
-        cinemaHallService.getAll().forEach(System.out::println);
-        System.out.println("MOVIE SESSION");
+        cinemaHallService.getAll().forEach(logger::info);
 
+        logger.info("Starting 'Movie Session' test . . .");
         MovieSession movieSession = new MovieSession();
         MovieSession movieSession2 = new MovieSession();
         movieSession.setCinemaHall(cinemaHall);
@@ -54,28 +57,29 @@ public class Main {
         movieSession.setShowTime(date);
         movieSessionService.add(movieSession);
 
-        movieSessionService.findAvailableSessions(1L, LocalDate.now()).forEach(System.out::println);
+        movieSessionService.findAvailableSessions(1L, LocalDate.now()).forEach(logger::info);
 
-        System.out.println("AUTH:");
-
+        logger.info("Starting 'Authentication Service' test . . .");
         AuthenticationService authenticationService =
                 (AuthenticationService) injector.getInstance(AuthenticationService.class);
         User bob = authenticationService.register("bob@gmail.com", "qwerty123456");
-        System.out.println(authenticationService.login("bob@gmail.com", "qwerty123456"));
+        String email = null;
+        try {
+            logger.info(authenticationService.login(email = "bob@gmail.com", "qwerty123456"));
+        } catch (AuthenticationException e) {
+            logger.warn("Something went wrong while logging the user with E-Mail: " + email, e);
+        }
 
-        System.out.println("CART");
-
+        logger.info("Starting 'Shopping Cart Service' test . . .");
         ShoppingCartService shoppingCartService =
                 (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
         shoppingCartService.addSession(movieSession, bob);
-        System.out.println(shoppingCartService.getByUser(bob));
+        logger.info(shoppingCartService.getByUser(bob));
 
-        System.out.println("ORDER");
-
+        logger.info("Starting 'Order Service' test . . .");
         OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
         orderService.completeOrder(shoppingCartService.getByUser(bob).getTickets(), bob);
-
         List<Order> orderList = orderService.getOrderHistory(bob);
-        orderList.forEach(System.out::println);
+        orderList.forEach(logger::info);
     }
 }

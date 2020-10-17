@@ -2,10 +2,12 @@ package com.dev.cinema.dao;
 
 import com.dev.cinema.exceptions.DataProcessingException;
 import com.dev.cinema.util.HibernateUtil;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 public class AbstractDao<T> {
+    private static final Logger logger = Logger.getLogger(AbstractDao.class);
 
     public T add(T entity, Class<T> clazz) {
         Session session = null;
@@ -15,6 +17,7 @@ public class AbstractDao<T> {
             transaction = session.beginTransaction();
             session.save(entity);
             transaction.commit();
+            logger.info("Entity was added successfully: " + entity);
             return entity;
         } catch (Exception e) {
             if (transaction != null) {
