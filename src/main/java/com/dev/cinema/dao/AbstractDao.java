@@ -10,7 +10,7 @@ public class AbstractDao<T> {
     private static final Logger logger = Logger.getLogger(AbstractDao.class);
     public final SessionFactory sessionFactory;
 
-    public AbstractDao(SessionFactory sessionFactory) {
+    protected AbstractDao(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
