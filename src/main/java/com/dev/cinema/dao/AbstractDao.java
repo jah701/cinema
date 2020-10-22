@@ -8,9 +8,9 @@ import org.hibernate.Transaction;
 
 public class AbstractDao<T> {
     private static final Logger logger = Logger.getLogger(AbstractDao.class);
-    public final SessionFactory sessionFactory;
+    protected final SessionFactory sessionFactory;
 
-    protected AbstractDao(SessionFactory sessionFactory) {
+    public AbstractDao(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
