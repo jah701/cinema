@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class CinemaHallDaoImpl extends AbstractDao<CinemaHall>
         implements CinemaHallDao {
-
     @Autowired
     public CinemaHallDaoImpl(SessionFactory sessionFactory) {
         super(sessionFactory);
