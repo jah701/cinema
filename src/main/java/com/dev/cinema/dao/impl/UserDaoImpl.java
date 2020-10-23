@@ -2,10 +2,8 @@ package com.dev.cinema.dao.impl;
 
 import com.dev.cinema.dao.AbstractDao;
 import com.dev.cinema.dao.UserDao;
-import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.model.User;
 import java.util.Optional;
-
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
