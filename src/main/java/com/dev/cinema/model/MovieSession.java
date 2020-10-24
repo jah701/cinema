@@ -1,6 +1,6 @@
 package com.dev.cinema.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,5 +20,5 @@ public class MovieSession {
     private Movie movie;
     @ManyToOne
     private CinemaHall cinemaHall;
-    private LocalDate showtime;
+    private LocalDateTime showtime;
 }

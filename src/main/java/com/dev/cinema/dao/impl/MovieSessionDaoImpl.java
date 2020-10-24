@@ -38,8 +38,8 @@ public class MovieSessionDaoImpl extends AbstractDao<MovieSession>
                                     + "WHERE id = :id AND showtime "
                                     + "BETWEEN :from AND :to", MovieSession.class);
             query.setParameter("id", id);
-            query.setParameter("from", LocalDate.from(date.atStartOfDay()));
-            query.setParameter("to", LocalDate.from(date.atTime(LocalTime.MAX)));
+            query.setParameter("from", date.atTime(LocalTime.MIN));
+            query.setParameter("to", date.atTime(LocalTime.MAX));
             return query.getResultList();
         } catch (Exception e) {
             return Collections.emptyList();

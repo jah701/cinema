@@ -25,7 +25,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order completeOrder(List<Ticket> tickets, User user) {
         Order order = new Order();
-
         order.setTickets(new ArrayList<>(tickets));
         order.setUser(user);
         order.setOrderDate(LocalDate.now());

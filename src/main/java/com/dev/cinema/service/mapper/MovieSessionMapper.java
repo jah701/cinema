@@ -5,8 +5,6 @@ import com.dev.cinema.model.dto.MovieSessionRequestDto;
 import com.dev.cinema.model.dto.MovieSessionResponseDto;
 import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,8 +21,7 @@ public class MovieSessionMapper {
         MovieSessionResponseDto dto = new MovieSessionResponseDto();
         dto.setCinemaHallId(movieSession.getCinemaHall().getId());
         dto.setMovieId(movieSession.getMovie().getId());
-        dto.setShowtime(movieSession.getShowtime()
-                .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        dto.setShowtime(movieSession.getShowtime());
         return dto;
     }
 
@@ -32,7 +29,7 @@ public class MovieSessionMapper {
         MovieSession movieSession = new MovieSession();
         movieSession.setMovie(movieService.getById(dto.getMovieId()));
         movieSession.setCinemaHall(cinemaHallService.getById(dto.getCinemaHallId()));
-        movieSession.setShowtime(LocalDate.parse(dto.getShowtime()));
+        movieSession.setShowtime(dto.getShowtime());
         return movieSession;
     }
 }

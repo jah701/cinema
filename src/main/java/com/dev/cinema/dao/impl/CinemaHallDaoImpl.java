@@ -31,7 +31,11 @@ public class CinemaHallDaoImpl extends AbstractDao<CinemaHall>
     @Override
     public Optional<CinemaHall> getById(Long id) {
         logger.info("Getting cinema hall. . .");
-        return Optional.of(sessionFactory.openSession().get(CinemaHall.class, id));
+        try (Session session = sessionFactory.openSession()) {
+            return Optional.of(sessionFactory.openSession().get(CinemaHall.class, id));
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get cinema hall with id " + id, e);
+        }
     }
 
     @Override
