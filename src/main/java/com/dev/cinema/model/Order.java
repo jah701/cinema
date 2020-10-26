@@ -1,6 +1,6 @@
 package com.dev.cinema.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +20,7 @@ public class Order {
     private Long id;
     @OneToMany
     private List<Ticket> tickets;
-    private LocalDate orderDate;
+    private LocalDateTime orderDate;
     @ManyToOne
     private User user;
 }
