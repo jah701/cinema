@@ -1,13 +1,13 @@
 package com.dev.cinema.dao;
 
 import com.dev.cinema.exceptions.DataProcessingException;
-import org.apache.log4j.Logger;
+import lombok.extern.log4j.Log4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-public class AbstractDao<T> {
-    private static final Logger logger = Logger.getLogger(AbstractDao.class);
+@Log4j
+public abstract class AbstractDao<T> {
     protected final SessionFactory sessionFactory;
 
     public AbstractDao(SessionFactory sessionFactory) {
@@ -22,7 +22,7 @@ public class AbstractDao<T> {
             transaction = session.beginTransaction();
             session.save(entity);
             transaction.commit();
-            logger.info("Entity was added successfully: " + entity);
+            log.info("Entity was added successfully: " + entity);
             return entity;
         } catch (Exception e) {
             if (transaction != null) {
