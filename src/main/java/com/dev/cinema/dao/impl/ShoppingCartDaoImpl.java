@@ -37,15 +37,6 @@ public class ShoppingCartDaoImpl extends AbstractDao<ShoppingCart> implements Sh
     }
 
     @Override
-    public ShoppingCart getByUserId(Long id) {
-        try (Session session = sessionFactory.openSession()) {
-            return session.get(ShoppingCart.class, id);
-        } catch (Exception e) {
-            throw new DataProcessingException("Can't get shopping cart with id " + id, e);
-        }
-    }
-
-    @Override
     public void update(ShoppingCart shoppingCart) {
         Session session = null;
         Transaction transaction = null;

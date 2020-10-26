@@ -1,14 +1,12 @@
 package com.dev.cinema.model.dto;
 
-import com.dev.cinema.model.Ticket;
-import lombok.Data;
-
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.Data;
 
 @Data
 public class OrderResponseDto {
     private Long userId;
-    private List<Ticket> tickets;
+    private List<TicketResponseDto> tickets;
     private LocalDateTime orderDate;
 }

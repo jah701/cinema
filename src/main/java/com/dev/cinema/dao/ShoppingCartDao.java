@@ -8,7 +8,5 @@ public interface ShoppingCartDao {
 
     ShoppingCart getByUser(User user);
 
-    ShoppingCart getByUserId(Long id);
-
     void update(ShoppingCart shoppingCart);
 }

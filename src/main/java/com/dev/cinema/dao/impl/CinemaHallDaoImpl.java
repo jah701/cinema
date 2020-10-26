@@ -7,7 +7,6 @@ import com.dev.cinema.model.CinemaHall;
 import java.util.List;
 import java.util.Optional;
 import lombok.extern.log4j.Log4j;
-import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;

@@ -5,8 +5,6 @@ import com.dev.cinema.model.User;
 import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
 import com.dev.cinema.util.HashUtil;
-import java.util.Optional;
-
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +24,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public User login(String email, String password) throws AuthenticationException {
         log.info("[LOGIN] User with email " + email + " is trying to login. . .");
-        Optional<User> userFromDb = userService.findByEmail(email);
-        if (userFromDb.isPresent() && isPasswordValid(password, userFromDb.get())) {
-            return userFromDb.get();
+        User userFromDb = userService.findByEmail(email);
+        if (userFromDb != null && isPasswordValid(password, userFromDb)) {
+            return userFromDb;
         }
         throw new AuthenticationException("Incorrect data entered");
     }
