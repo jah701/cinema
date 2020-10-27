@@ -8,7 +8,6 @@ import com.dev.cinema.service.MovieSessionService;
 import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
 import com.dev.cinema.service.mapper.ShoppingCartMapper;
-import java.util.Optional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,8 +34,8 @@ public class ShoppingCartController {
 
     @GetMapping("/by-user")
     public ShoppingCartResponseDto getByUser(@RequestParam Long userId) {
-        Optional<User> user = userService.getById(userId);
-        ShoppingCart shoppingCart = shoppingCartService.getByUser(user.get());
+        User user = userService.getById(userId);
+        ShoppingCart shoppingCart = shoppingCartService.getByUser(user);
         return shoppingCartMapper.cartToDto(shoppingCart);
     }
 
@@ -44,7 +43,7 @@ public class ShoppingCartController {
     public void addMovieSessionToShoppingCart(@RequestParam Long userId,
                                                      @RequestParam Long sessionId) {
         MovieSession movieSession = movieSessionService.getById(sessionId);
-        Optional<User> user = userService.getById(userId);
-        shoppingCartService.addSession(movieSession, user.get());
+        User user = userService.getById(userId);
+        shoppingCartService.addSession(movieSession, user);
     }
 }

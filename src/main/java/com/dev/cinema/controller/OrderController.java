@@ -8,7 +8,6 @@ import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
 import com.dev.cinema.service.mapper.OrderMapper;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,16 +35,16 @@ public class OrderController {
 
     @PostMapping("/complete")
     public OrderResponseDto completeOrder(@RequestParam Long userId) {
-        Optional<User> user = userService.getById(userId);
-        ShoppingCart shoppingCart = shoppingCartService.getByUser(user.get());
+        User user = userService.getById(userId);
+        ShoppingCart shoppingCart = shoppingCartService.getByUser(user);
         return orderMapper.orderToDto(orderService.completeOrder(shoppingCart.getTickets(),
-                user.get()));
+                user));
     }
 
     @GetMapping
     public List<OrderResponseDto> getAllUserOrders(@RequestParam Long userId) {
-        Optional<User> user = userService.getById(userId);
-        return orderService.getOrderHistory(user.get()).stream()
+        User user = userService.getById(userId);
+        return orderService.getOrderHistory(user).stream()
                 .map(orderMapper::orderToDto)
                 .collect(Collectors.toList());
     }
