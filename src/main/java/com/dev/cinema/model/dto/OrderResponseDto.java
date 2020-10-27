@@ -7,6 +7,6 @@ import lombok.Data;
 @Data
 public class OrderResponseDto {
     private Long userId;
-    private List<TicketResponseDto> tickets;
+    private List<Long> tickets;
     private LocalDateTime orderDate;
 }

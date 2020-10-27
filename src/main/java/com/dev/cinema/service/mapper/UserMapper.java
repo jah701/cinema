@@ -9,6 +9,7 @@ public class UserMapper {
     public UserResponseDto userToDto(User user) {
         UserResponseDto dto = new UserResponseDto();
         dto.setName(user.getName());
+        dto.setId(user.getId());
         return dto;
     }
 }
