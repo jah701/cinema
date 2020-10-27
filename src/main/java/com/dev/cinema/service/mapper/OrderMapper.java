@@ -15,6 +15,7 @@ public class OrderMapper {
                 .map(Ticket::getId)
                 .collect(Collectors.toList()));
         dto.setOrderDate(order.getOrderDate());
+        dto.setOrderId(order.getId());
         return dto;
     }
 }
