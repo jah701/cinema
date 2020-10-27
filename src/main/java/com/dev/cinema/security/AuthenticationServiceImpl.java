@@ -5,10 +5,9 @@ import com.dev.cinema.model.User;
 import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
 import com.dev.cinema.util.HashUtil;
+import java.util.Optional;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Log4j
 @Service
