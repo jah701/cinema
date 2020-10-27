@@ -8,6 +8,8 @@ import com.dev.cinema.util.HashUtil;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Log4j
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -24,9 +26,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public User login(String email, String password) throws AuthenticationException {
         log.info("[LOGIN] User with email " + email + " is trying to login. . .");
-        User userFromDb = userService.findByEmail(email);
-        if (userFromDb != null && isPasswordValid(password, userFromDb)) {
-            return userFromDb;
+        Optional<User> userFromDb = userService.findByEmail(email);
+        if (userFromDb.isPresent() && isPasswordValid(password, userFromDb.get())) {
+            return userFromDb.get();
         }
         throw new AuthenticationException("Incorrect data entered");
     }
