@@ -2,11 +2,14 @@ package com.dev.cinema.dao.impl;
 
 import com.dev.cinema.dao.AbstractDao;
 import com.dev.cinema.dao.MovieSessionDao;
+import com.dev.cinema.exceptions.DataProcessingException;
 import com.dev.cinema.model.MovieSession;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import lombok.extern.log4j.Log4j;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,6 +17,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+@Log4j
 @Repository
 public class MovieSessionDaoImpl extends AbstractDao<MovieSession>
         implements MovieSessionDao {
@@ -31,7 +35,7 @@ public class MovieSessionDaoImpl extends AbstractDao<MovieSession>
 
     @Override
     public List<MovieSession> getAvailableMovieSessions(Long id, LocalDate date) {
-        logger.info("Getting movie session. . .");
+        log.info("Getting movie session. . .");
         try (Session session = sessionFactory.openSession()) {
             Query<MovieSession> query =
                     session.createQuery("FROM MovieSession "
@@ -43,6 +47,15 @@ public class MovieSessionDaoImpl extends AbstractDao<MovieSession>
             return query.getResultList();
         } catch (Exception e) {
             return Collections.emptyList();
+        }
+    }
+
+    @Override
+    public Optional<MovieSession> getById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return Optional.of(session.get(MovieSession.class, id));
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get session with id " + id, e);
         }
     }
 }

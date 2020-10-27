@@ -6,17 +6,16 @@ import com.dev.cinema.exceptions.DataProcessingException;
 import com.dev.cinema.model.Movie;
 import java.util.List;
 import java.util.Optional;
-import org.apache.log4j.Logger;
+import lombok.extern.log4j.Log4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+@Log4j
 @Repository
 public class MovieDaoImpl extends AbstractDao<Movie> implements MovieDao {
-    private static final Logger logger = Logger.getLogger(MovieDaoImpl.class);
-
     @Autowired
     public MovieDaoImpl(SessionFactory sessionFactory) {
         super(sessionFactory);
@@ -29,7 +28,7 @@ public class MovieDaoImpl extends AbstractDao<Movie> implements MovieDao {
 
     @Override
     public Optional<Movie> getById(Long id) {
-        logger.info("Getting movie with id " + id + ". . .");
+        log.info("Getting movie with id " + id + ". . .");
         try (Session session = sessionFactory.openSession()) {
             return Optional.of(session.get(Movie.class, id));
         } catch (Exception e) {
