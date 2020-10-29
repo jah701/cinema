@@ -8,6 +8,6 @@ public class EmailValidator implements ConstraintValidator<Email, String> {
     public boolean isValid(String value, ConstraintValidatorContext context) {
         String emailRegex = "^[\\w!#$%&'*+\\=?`{|}~^-]+(?:\\\\.[\\\\w!#$%&'*+\\=?`{|}~^-]+)"
                 + "*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
-        return value.matches(emailRegex);
+        return value != null && value.matches(emailRegex);
     }
 }
