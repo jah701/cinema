@@ -15,13 +15,13 @@ public class UserRequestDto {
     @Email
     private String email;
     @NotNull(message = "Password can not be null")
-    @Size(min = 8)
+    @Size(min = 8, message = "Password should be at least 8 characters long")
     private String password;
-    @Size(min = 8)
+    @Size(min = 8, message = "Password should be at least 8 characters long")
     @NotNull(message = "Password can not be null")
     private String passwordRepeat;
     @NotNull(message = "Name can not be null")
-    @Size(min = 3, max = 16)
+    @Size(min = 3, max = 16, message = "Name length should be between 3 and 16 characters")
     private String name;
 
     public UserRequestDto() {
