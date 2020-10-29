@@ -17,7 +17,6 @@ import lombok.Data;
 public class ShoppingCart {
     @Id
     private Long id;
-
     @OneToMany
     private List<Ticket> tickets;
     @MapsId

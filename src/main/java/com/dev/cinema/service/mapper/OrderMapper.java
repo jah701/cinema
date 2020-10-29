@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderMapper {
     public OrderResponseDto orderToDto(Order order) {
-        OrderResponseDto dto = new OrderResponseDto();
-        dto.setUserId(order.getUser().getId());
-        dto.setTickets(order.getTickets().stream()
-                .map(Ticket::getId)
-                .collect(Collectors.toList()));
-        dto.setOrderDate(order.getOrderDate());
-        dto.setOrderId(order.getId());
-        return dto;
+        return new OrderResponseDto(
+                order.getUser().getId(),
+                order.getId(),
+                order.getTickets().stream()
+                        .map(Ticket::getId)
+                        .collect(Collectors.toList()),
+                order.getOrderDate()
+        );
     }
 }

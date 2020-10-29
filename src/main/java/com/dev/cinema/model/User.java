@@ -18,7 +18,6 @@ public class User {
     private String name;
     private String login;
     private String password;
-    private byte[] salt;
     @Column(unique = true)
     private String email;
 }
