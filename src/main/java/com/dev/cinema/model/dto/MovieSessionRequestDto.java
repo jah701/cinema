@@ -1,15 +1,15 @@
 package com.dev.cinema.model.dto;
 
 import java.time.LocalDateTime;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
-import org.springframework.lang.NonNull;
 
 @Data
 public class MovieSessionRequestDto {
-    @NonNull
+    @NotNull(message = "Movie id can not be null")
     private Long movieId;
-    @NonNull
+    @NotNull(message = "Cinema hall id can not be null")
     private Long cinemaHallId;
-    @NonNull
+    @NotNull(message = "Showtime can not be null")
     private LocalDateTime showtime;
 }

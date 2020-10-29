@@ -1,13 +1,14 @@
 package com.dev.cinema.model.dto;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.Data;
-import org.springframework.lang.NonNull;
 
 @Data
 public class CinemaHallRequestDto {
-    @NonNull
+    @NotNull(message = "Capacity can not be null")
     @Size(min = 25)
     private int capacity;
+    @NotNull(message = "Description can not be null")
     private String description;
 }
