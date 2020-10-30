@@ -4,6 +4,7 @@ import com.dev.cinema.dao.UserDao;
 import com.dev.cinema.model.User;
 import com.dev.cinema.service.UserService;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ public class UserServiceImpl implements UserService {
     private final UserDao userDao;
     private final PasswordEncoder encoder;
 
+    @Autowired
     public UserServiceImpl(UserDao userDao, PasswordEncoder encoder) {
         this.userDao = userDao;
         this.encoder = encoder;

@@ -6,6 +6,7 @@ import com.dev.cinema.model.dto.UserResponseDto;
 import com.dev.cinema.security.AuthenticationService;
 import com.dev.cinema.service.mapper.UserMapper;
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,7 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
     private final UserMapper userMapper;
 
+    @Autowired
     public AuthenticationController(AuthenticationService authenticationService,
                                     UserMapper userMapper) {
         this.authenticationService = authenticationService;

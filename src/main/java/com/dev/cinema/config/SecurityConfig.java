@@ -16,20 +16,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth
                 .inMemoryAuthentication()
                 .passwordEncoder(getEncoder())
-                .withUser("user")
-                .password(getEncoder().encode("1234"))
-                .roles("USER");
+                    .withUser("user")
+                    .password(getEncoder().encode("1234"))
+                    .roles("USER");
     }
 
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .anyRequest().authenticated()
-                .and()
+                    .anyRequest().authenticated()
+                    .and()
                 .formLogin()
-                .and()
+                    .and()
                 .httpBasic()
-                .and()
+                    .and()
                 .csrf().disable();
     }
 

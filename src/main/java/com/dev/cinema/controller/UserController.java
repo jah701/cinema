@@ -5,6 +5,7 @@ import com.dev.cinema.model.dto.UserResponseDto;
 import com.dev.cinema.service.UserService;
 import com.dev.cinema.service.mapper.UserMapper;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
 
+    @Autowired
     public UserController(UserService userService, UserMapper userMapper) {
         this.userService = userService;
         this.userMapper = userMapper;

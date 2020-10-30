@@ -9,6 +9,7 @@ import com.dev.cinema.service.UserService;
 import com.dev.cinema.service.mapper.OrderMapper;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,7 @@ public class OrderController {
     private final ShoppingCartService shoppingCartService;
     private final OrderMapper orderMapper;
 
+    @Autowired
     public OrderController(OrderService orderService,
                            UserService userService,
                            ShoppingCartService shoppingCartService,
