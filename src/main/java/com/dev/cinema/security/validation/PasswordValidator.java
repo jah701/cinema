@@ -3,7 +3,6 @@ package com.dev.cinema.security.validation;
 import com.dev.cinema.model.dto.UserRequestDto;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import org.springframework.beans.BeanWrapperImpl;
 
 public class PasswordValidator implements ConstraintValidator<ValidFieldRepeat, UserRequestDto> {
     private String password;
@@ -16,16 +15,9 @@ public class PasswordValidator implements ConstraintValidator<ValidFieldRepeat, 
     }
 
     @Override
-    public boolean isValid(UserRequestDto value, ConstraintValidatorContext context) {
-        String fieldValue = (String) new BeanWrapperImpl(value)
-                .getPropertyValue(password);
-        String fieldMatchValue = (String) new BeanWrapperImpl(value)
-                .getPropertyValue(passwordRepeat);
-
-        if (fieldValue != null) {
-            return fieldValue.equals(fieldMatchValue);
-        } else {
-            return fieldMatchValue == null;
-        }
+    public boolean isValid(UserRequestDto dto, ConstraintValidatorContext context) {
+        return dto.getPassword() != null
+                && dto.getPasswordRepeat() != null
+                && dto.getPassword().equals(dto.getPasswordRepeat());
     }
 }
