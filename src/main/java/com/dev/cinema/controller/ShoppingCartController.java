@@ -8,6 +8,9 @@ import com.dev.cinema.service.MovieSessionService;
 import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
 import com.dev.cinema.service.mapper.ShoppingCartMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +25,7 @@ public class ShoppingCartController {
     private final MovieSessionService movieSessionService;
     private final ShoppingCartMapper shoppingCartMapper;
 
+    @Autowired
     public ShoppingCartController(ShoppingCartService shoppingCartService,
                                   UserService userService,
                                   MovieSessionService movieSessionService,
@@ -33,17 +37,21 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/by-user")
-    public ShoppingCartResponseDto getByUser(@RequestParam Long userId) {
-        User user = userService.getById(userId);
+    public ShoppingCartResponseDto getByUser(Authentication auth) {
+        UserDetails principal = (UserDetails) auth.getPrincipal();
+        String email = principal.getUsername();
+        User user = userService.findByEmail(email).orElseThrow();
         ShoppingCart shoppingCart = shoppingCartService.getByUser(user);
         return shoppingCartMapper.cartToDto(shoppingCart);
     }
 
     @PostMapping("/movie-sessions")
-    public void addMovieSessionToShoppingCart(@RequestParam Long userId,
+    public void addMovieSessionToShoppingCart(Authentication auth,
                                                      @RequestParam Long sessionId) {
+        UserDetails principal = (UserDetails) auth.getPrincipal();
+        String email = principal.getUsername();
         MovieSession movieSession = movieSessionService.getById(sessionId);
-        User user = userService.getById(userId);
+        User user = userService.findByEmail(email).orElseThrow();
         shoppingCartService.addSession(movieSession, user);
     }
 }
