@@ -2,7 +2,7 @@ package com.dev.cinema.dao.impl;
 
 import com.dev.cinema.dao.AbstractDao;
 import com.dev.cinema.dao.MovieDao;
-import com.dev.cinema.exceptions.DataProcessingException;
+import com.dev.cinema.exception.DataProcessingException;
 import com.dev.cinema.model.Movie;
 import java.util.List;
 import java.util.Optional;

@@ -1,6 +1,6 @@
 package com.dev.cinema.dao;
 
-import com.dev.cinema.exceptions.DataProcessingException;
+import com.dev.cinema.exception.DataProcessingException;
 import lombok.extern.log4j.Log4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

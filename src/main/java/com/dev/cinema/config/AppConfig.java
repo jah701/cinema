@@ -10,13 +10,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @PropertySource("classpath:db.properties")
 @ComponentScan(basePackages = {
         "com.dev.cinema.service",
         "com.dev.cinema.dao",
-        "com.dev.cinema.security"
+        "com.dev.cinema.security",
+        "com.dev.cinema.util"
 })
 public class AppConfig {
     private final Environment environment;
@@ -48,5 +51,10 @@ public class AppConfig {
 
         factoryBean.setPackagesToScan("com.dev.cinema.model");
         return factoryBean;
+    }
+
+    @Bean
+    public PasswordEncoder getEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

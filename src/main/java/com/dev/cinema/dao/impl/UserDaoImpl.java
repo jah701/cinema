@@ -2,7 +2,7 @@ package com.dev.cinema.dao.impl;
 
 import com.dev.cinema.dao.AbstractDao;
 import com.dev.cinema.dao.UserDao;
-import com.dev.cinema.exceptions.DataProcessingException;
+import com.dev.cinema.exception.DataProcessingException;
 import com.dev.cinema.model.User;
 import java.util.Optional;
 import lombok.extern.log4j.Log4j;
@@ -38,7 +38,8 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     public Optional<User> findByEmail(String email) {
         log.info("Getting user with email " + email);
         try (Session session = sessionFactory.openSession()) {
-            Query<User> query = session.createQuery("from User where email = :email");
+            Query<User> query = session.createQuery("from User u "
+                    + "join fetch u.roles where u.email = :email");
             query.setParameter("email", email);
             return query.uniqueResultOptional();
         }
