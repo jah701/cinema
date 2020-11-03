@@ -32,7 +32,7 @@ public class InjectData {
         bob.setLogin("Bob123");
         bob.setEmail("bob@mail.com");
         bob.setPassword("1234");
-        bob.setRoles(List.of(adminRole, userRole));
+        bob.setRoles(List.of(roleService.getByName("ADMIN")));
         System.out.println(userService.add(bob) + "[ADDED]");
 
         User alice = new User();
@@ -40,7 +40,7 @@ public class InjectData {
         alice.setLogin("Alice123");
         alice.setPassword("1234");
         alice.setEmail("alice@mail.com");
-        alice.setRoles(List.of(userRole));
+        alice.setRoles(List.of(roleService.getByName("USER")));
         System.out.println(userService.add(alice) + "[ADDED]");
     }
 }
