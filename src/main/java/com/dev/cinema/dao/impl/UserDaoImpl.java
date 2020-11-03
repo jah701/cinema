@@ -38,7 +38,8 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     public Optional<User> findByEmail(String email) {
         log.info("Getting user with email " + email);
         try (Session session = sessionFactory.openSession()) {
-            Query<User> query = session.createQuery("from User where email = :email");
+            Query<User> query = session.createQuery("from User u "
+                    + "join fetch u.roles where u.email = :email");
             query.setParameter("email", email);
             return query.uniqueResultOptional();
         }
