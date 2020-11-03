@@ -4,7 +4,7 @@ import com.dev.cinema.model.User;
 import com.dev.cinema.service.RoleService;
 import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
-import java.util.List;
+import java.util.Set;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +30,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setEmail(email);
         user.setName(name);
         user.setPassword(password);
-        user.setRoles(List.of(roleService.getByName("USER")));
+        user.setRoles(Set.of(roleService.getByName("USER")));
         user = userService.add(user);
         shoppingCartService.registerNewShoppingCart(user);
         return user;

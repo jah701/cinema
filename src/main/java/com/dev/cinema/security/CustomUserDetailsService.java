@@ -7,23 +7,22 @@ import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
     private final UserDao userDao;
-    private final PasswordEncoder encoder;
 
     @Autowired
-    public CustomUserDetailsService(UserDao userDao, PasswordEncoder encoder) {
+    public CustomUserDetailsService(UserDao userDao) {
         this.userDao = userDao;
-        this.encoder = encoder;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userDao.findByEmail(username).orElseThrow();
+        User user = userDao.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Can't get user wth email: "
+                        + username));
         UserBuilder builder = null;
         if (user != null) {
             builder = org.springframework.security.core.userdetails.User.withUsername(username);
