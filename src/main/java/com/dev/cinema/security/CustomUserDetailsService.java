@@ -23,11 +23,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userDao.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Can't get user wth email: "
                         + username));
-        UserBuilder builder;
-        builder = org.springframework.security.core.userdetails.User.withUsername(username);
+        UserBuilder builder
+                = org.springframework.security.core.userdetails.User.withUsername(username);
         builder.password(user.getPassword());
-        String[] roles = user.getRoles()
-                .stream()
+        String[] roles = user.getRoles().stream()
                 .map(r -> r.getRole().toString())
                 .toArray(String[]::new);
         builder.roles(roles);
